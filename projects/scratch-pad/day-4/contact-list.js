@@ -20,7 +20,7 @@
  *         returns the contact object if found in the contacts-list, or, 
  *         undefined if the fullName does not match any contacts in the list.
  *      4. removeContact(contact): takes a contact object to be removed from 
- *         the contact-list.
+ *         the contact-list. splice method
  *      5. add a printAllContactNames() Function to your makeContactList() factory. The printAllContactNames() Function should 
  *         return a String formated with all the full-names of the separated 
  *         with a line-break, like so:
@@ -35,6 +35,13 @@
 
 // YOUR CODE GOES BELOW HERE //
 function makeContact(id, nameFirst, nameLast) {
+    
+    return {
+        id: id,
+        nameFirst: nameFirst,
+        nameLast: nameLast
+
+     }
 
 } 
 
@@ -43,12 +50,52 @@ function makeContactList() {
     /*
      * You need something here to hold contacts. See length api for a hint:
      */
-    var contacts;
+    var contacts = [];
     
     return {
         // we implemented the length api for you //
         length: function() {
             return contacts.length;
+        },
+
+        addContact: function(contact) {
+            contacts.push(contact)
+
+        },
+
+        findContact: function(fullName){
+            var nameArray = fullName.split(" ")
+            var firstName = nameArray[0];
+            var lastName = nameArray[1];
+
+            for (var i in contacts) {
+                if (contacts[i].nameFirst === firstName && contacts[i].nameLast === lastName) {
+                    return contacts[i];
+                }
+            }
+        },
+
+        removeContact: function(contact) {
+            for (var i in contacts) {
+                if (contacts[i].id === contact.id) {
+                    contacts.splice(i, 1);
+                }
+            }
+        },
+
+        printAllContactNames: function() {
+            var fullNames = [] 
+            for (var i in contacts) {
+                if (i == contacts.length - 1){
+                    var names= contacts[i].nameFirst + " " + contacts[i].nameLast;
+                    fullNames.push(names);
+                }else{
+                    var names= contacts[i].nameFirst + " " + contacts[i].nameLast + "\n";
+                    fullNames.push(names);
+                }
+                
+            }
+            return fullNames.join("");
         }
     }
 }
